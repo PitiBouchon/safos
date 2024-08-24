@@ -19,6 +19,6 @@ Safe OS microkernel written in Rust for the RiscV architecture
 
 [target.'cfg(target_arch = "riscv64")'.dependencies]
 spin = "0.9.6"
-riscv = "0.10.1"
+riscv = "0.11.1"
 sbi = "0.2.0"
 fdt = "0.1.5"
