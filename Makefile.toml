@@ -1,0 +1,49 @@
+[config]
+default_to_workspace = false
+
+[env]
+CPUS = 2
+MEMORY = "512M"
+QEMU_RISCV = "qemu-system-riscv64"
+QEMU_RISCV_OPTS = """
+-machine virt \
+-kernel target/riscv64imac-unknown-none-elf/debug/safos \
+"""
+QEMU_OPTS = """
+-smp ${CPUS} \
+-m ${MEMORY} \
+-nographic \
+"""
+QEMU_GDB_OPTS = "-s -S" # use port 1234
+
+[tasks.build]
+command = "cargo"
+args = ["build"]
+
+[tasks.qemu-riscv]
+linux_alias = "linux_qemu_riscv"
+windows_alias = "windows_qemu_riscv"
+
+[tasks.linux_qemu_riscv]
+script = "${QEMU_RISCV} ${QEMU_RISCV_OPTS} ${QEMU_OPTS}"
+dependencies = ["build"]
+
+[tasks.windows_qemu_riscv]
+script = "%QEMU_RISCV% %QEMU_RISCV_OPTS% %QEMU_OPTS%"
+dependencies = ["build"]
+
+[tasks.qemu-riscv-gdb]
+linux_alias = "linux_qemu_riscv_gdb"
+windows_alias = "windows_qemu_riscv_gdb"
+
+[tasks.linux_qemu_riscv_gdb]
+script = "${QEMU_RISCV} ${QEMU_RISCV_OPTS} ${QEMU_OPTS} ${QEMU_GDB_OPTS}"
+dependencies = ["build"]
+
+[tasks.windows_qemu_riscv_gdb]
+script = "%QEMU_RISCV% %QEMU_RISCV_OPTS% %QEMU_OPTS% %QEMU_GDB_OPTS%"
+dependencies = ["build"]
+
+[tasks.clean]
+command = "cargo"
+args = ["clean"]
