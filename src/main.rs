@@ -13,7 +13,7 @@ struct Stack([u8; OS_STACK_SIZE]);
 #[no_mangle]
 static OS_STACK: Stack = Stack([0; OS_STACK_SIZE]);
 
-fn kmain(_hart_id: usize) -> ! {
+fn kmain(_hart_id: usize, _arch_specific_data: arch::ArchSpecificData) -> ! {
     #[allow(clippy::empty_loop)]
     loop {}
 }

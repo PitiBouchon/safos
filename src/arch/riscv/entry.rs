@@ -1,3 +1,4 @@
+use crate::arch::riscv::machine::set_fdt;
 use crate::{OS_STACK, OS_STACK_SIZE};
 use core::arch::asm;
 
@@ -29,5 +30,15 @@ unsafe extern "C" fn _entry() -> ! {
 
 #[no_mangle]
 pub unsafe extern "C" fn start(hart_id: usize, dtb: usize) -> ! {
-    crate::kmain(hart_id)
+    legacy_print(format_args!("HELLO FROM SafOS"));
+
+    match setup_machine(dtb) {
+        Err(err) => {
+            legacy_print(format_args!("Couldn't setup machine: {:?}", err));
+            legacy_print(format_args!("Looping infinitely"));
+            #[allow(clippy::empty_loop)]
+            loop {}
+        }
+        Ok(arch_specific_data) => crate::kmain(hart_id, arch_specific_data),
+    }
 }
