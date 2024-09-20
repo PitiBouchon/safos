@@ -2,6 +2,10 @@
 
 Safe OS microkernel written in Rust for the RiscV architecture
 
+## Documentation
+
+See the [Book](https://pitibouchon.github.io/safos/)
+
 ## Dependencies
 
 In order to build and run the OS you'll need :
