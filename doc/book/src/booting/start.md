@@ -1,6 +1,6 @@
 # The start function
 
-The two arguments of this function are the hart id and the adress of the devicetree
+The two arguments of this function are the hart id and the address of the devicetree
 
 ## Hart Id
 

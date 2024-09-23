@@ -44,6 +44,16 @@ dependencies = ["build"]
 script = "%QEMU_RISCV% %QEMU_RISCV_OPTS% %QEMU_OPTS% %QEMU_GDB_OPTS%"
 dependencies = ["build"]
 
+[tasks.dump-qemu-dts]
+linux_alias = "linux_dump_qemu_dts"
+
+[tasks.linux_dump_qemu_dts]
+script = "dtc -I dtb -O dts doc/device_tree/virt.dtb >> doc/device_tree/virt.dts"
+dependencies = ["linux_dump_qemu_dtb"]
+
+[tasks.linux_dump_qemu_dtb]
+script = "${QEMU_RISCV} ${QEMU_RISCV_OPTS} ${QEMU_OPTS} -M virt,dumpdtb=doc/device_tree/virt.dtb"
+
 [tasks.clean]
 command = "cargo"
 args = ["clean"]

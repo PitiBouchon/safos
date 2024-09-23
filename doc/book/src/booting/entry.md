@@ -9,7 +9,7 @@ Inside `virt.ld` (in `src/arch/riscv/virt.ld`) we specify the entry point of the
 
 The entry function is what is called after OpenSBI is setup and is defined in `src/arch/riscv/entry.rs`
 
-> `#[naked]` : is used because so the entry funtion is not really a function like a rust function but a symbol with assembly instructions
+> `#[naked]` : is used because so the entry function is not really a function like a rust function but a symbol with assembly instructions
 > 
 > > When a normal function is called, the rust compiler will automatically add things, before anything
 > inside the function is run : it saves some registers (see the calling convention of the architecture),
